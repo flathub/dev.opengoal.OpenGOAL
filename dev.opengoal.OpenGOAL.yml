@@ -23,8 +23,8 @@ modules:
   - name: webkit2gtk-4.0
     sources:
       - type: archive
-        url: https://webkitgtk.org/releases/webkitgtk-2.44.0.tar.xz
-        sha256: c66530e41ba59b1edba4ee89ef20b2188e273bed0497e95084729e3cfbe30c87
+        url: https://webkitgtk.org/releases/webkitgtk-2.44.2.tar.xz
+        sha256: 523f42c8ff24832add17631f6eaafe8f9303afe316ef1a7e1844b952a7f7521b
         x-checker-data:
           type: html
           url: https://webkitgtk.org/releases/
@@ -44,7 +44,7 @@ modules:
       - -DENABLE_BUBBLEWRAP_SANDBOX=OFF
     modules:
       - shared-modules/libsoup/libsoup-2.4.json
-      
+
       - name: unifdef
         no-autogen: true
         make-install-args:
@@ -55,7 +55,6 @@ modules:
             sha256: 43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400
         cleanup:
           - '*'
-          
   - name: open-goal-launcher
     sources:
       - type: git
@@ -68,11 +67,11 @@ modules:
         path: dev.opengoal.OpenGOAL.appdata.xml
     buildsystem: simple
     build-options:
-        append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
-        env:
-          CARGO_HOME: /run/build/open-goal-launcher/cargo
-          XDG_CACHE_HOME: /run/build/open-goal-launcher/flatpak-node/cache
-          npm_config_nodedir: /usr/lib/sdk/node20
+      append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
+      env:
+        CARGO_HOME: /run/build/open-goal-launcher/cargo
+        XDG_CACHE_HOME: /run/build/open-goal-launcher/flatpak-node/cache
+        npm_config_nodedir: /usr/lib/sdk/node20
     build-commands:
       - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
       - yarn --offline
@@ -81,7 +80,11 @@ modules:
       - install -Dm755 -t /app/bin/ src-tauri/target/release/bundle/deb/*/data/usr/bin/*
       - install -Dm644 -t /app/share/metainfo/ dev.opengoal.OpenGOAL.appdata.xml
       - desktop-file-edit --set-icon="dev.opengoal.OpenGOAL" src-tauri/target/release/bundle/deb/*/data/usr/share/applications/open-goal-launcher.desktop
-      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/32x32/apps/open-goal-launcher.png /app/share/icons/hicolor/32x32/apps/dev.opengoal.OpenGOAL.png
-      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/128x128/apps/open-goal-launcher.png /app/share/icons/hicolor/128x128/apps/dev.opengoal.OpenGOAL.png
-      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/256x256@2/apps/open-goal-launcher.png /app/share/icons/hicolor/256x256/apps/dev.opengoal.OpenGOAL.png
-      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/applications/open-goal-launcher.desktop /app/share/applications/dev.opengoal.OpenGOAL.desktop
+      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/32x32/apps/open-goal-launcher.png
+        /app/share/icons/hicolor/32x32/apps/dev.opengoal.OpenGOAL.png
+      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/128x128/apps/open-goal-launcher.png
+        /app/share/icons/hicolor/128x128/apps/dev.opengoal.OpenGOAL.png
+      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/256x256@2/apps/open-goal-launcher.png
+        /app/share/icons/hicolor/256x256/apps/dev.opengoal.OpenGOAL.png
+      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/applications/open-goal-launcher.desktop
+        /app/share/applications/dev.opengoal.OpenGOAL.desktop
