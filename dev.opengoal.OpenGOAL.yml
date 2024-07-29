@@ -59,8 +59,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/open-goal/launcher.git
-        tag: v2.4.8
-        commit: 7172988b497d2e6845b9b943e4282d4b5ee3fc34
+        tag: v2.4.9
+        commit: 047976e4a12cddfce423fee3b8e86d1b9c247c98
       # Generated with flatpak-node-generator yarn yarn.lock
       - generated-sources.json
       # Generated with flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o cargo-sources.json src-tauri/Cargo.lock
