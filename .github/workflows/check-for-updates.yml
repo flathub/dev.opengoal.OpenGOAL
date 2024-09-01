@@ -28,24 +28,19 @@ jobs:
         with:
           args: --edit-only ${{ env.FLATPAK_ID }}.yml
 
-      - name: Check if updated
-        id: is-updated
+      - name: Check updated
+        id: is-updated 
         run: |
-          git_status=$(git status -s -uno)
-          echo "git_status=$git_status" >> $GITHUB_ENV
-          if [ -n "$git_status" ]; then
-            echo "updated=true" >> $GITHUB_ENV
-          else
-            echo "updated=false" >> $GITHUB_ENV
-          fi
+          git status -s -uno
+          [ -z "$(git status -s -uno)" ] || echo "::set-output name=updated::true"
 
       - uses: actions/setup-python@v2
-        if: env.updated == 'true'
+        if: steps.is-updated.outputs.updated
         with:
           python-version: 3.9
 
       - name: Install flatpak-node-generator and requirements
-        if: env.updated == 'true'
+        if: steps.is-updated.outputs.updated
         run: |
           python3 -m pip install pipx
           python3 -m pip install pipreqs
@@ -54,7 +49,7 @@ jobs:
           cd flatpak-builder-tools/node && pipx install .
 
       - name: Generate sources
-        if: env.updated == 'true'
+        if: steps.is-updated.outputs.updated
         run: |
           git submodule update --init
           ver=$(grep release dev.opengoal.OpenGOAL.appdata.xml | grep -m1 -oP '(?<=version=.)[^"]+')
