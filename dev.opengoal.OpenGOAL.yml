@@ -23,8 +23,8 @@ modules:
   - name: webkit2gtk-4.0
     sources:
       - type: archive
-        url: https://webkitgtk.org/releases/webkitgtk-2.44.2.tar.xz
-        sha256: 523f42c8ff24832add17631f6eaafe8f9303afe316ef1a7e1844b952a7f7521b
+        url: https://webkitgtk.org/releases/webkitgtk-2.44.3.tar.xz
+        sha256: dc82d042ecaca981a4852357c06e5235743319cf10a94cd36ad41b97883a0b54
         x-checker-data:
           type: html
           url: https://webkitgtk.org/releases/
@@ -61,15 +61,15 @@ modules:
         url: https://github.com/open-goal/launcher.git
         tag: v2.4.9
         commit: 047976e4a12cddfce423fee3b8e86d1b9c247c98
+        x-checker-data:
+          type: git
+          tag-pattern: ^v((?:\d+.)*\d+)$
       # Generated with flatpak-node-generator yarn yarn.lock
       - generated-sources.json
       # Generated with flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o cargo-sources.json src-tauri/Cargo.lock
       - cargo-sources.json
       - type: file
         path: dev.opengoal.OpenGOAL.appdata.xml
-        x-checker-data:
-          type: git
-          tag-pattern: ^v((?:\d+.)*\d+)$
     buildsystem: simple
     build-options:
       append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
