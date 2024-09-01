@@ -67,6 +67,9 @@ modules:
       - cargo-sources.json
       - type: file
         path: dev.opengoal.OpenGOAL.appdata.xml
+        x-checker-data:
+          type: git
+          tag-pattern: ^v((?:\d+.)*\d+)$
     buildsystem: simple
     build-options:
       append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
