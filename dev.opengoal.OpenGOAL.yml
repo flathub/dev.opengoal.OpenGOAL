@@ -23,8 +23,8 @@ modules:
   - name: webkit2gtk-4.0
     sources:
       - type: archive
-        url: https://webkitgtk.org/releases/webkitgtk-2.44.4.tar.xz
-        sha256: 2ce4ec1b78413035037aba8326b31ed72696626b7bea7bace5e46ac0d8cbe796
+        url: https://webkitgtk.org/releases/webkitgtk-2.46.0.tar.xz
+        sha256: d4d433040f190151560c50bde840850089f87bad4fefa9ebdb4aae856a3df43a
         x-checker-data:
           type: html
           url: https://webkitgtk.org/releases/
@@ -59,8 +59,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/open-goal/launcher.git
-        tag: v2.4.10
-        commit: c2174bbf5ecf8f85528b824885fff02e9151fac7
+        tag: v2.5.0
+        commit: 903b13475acb9548b1354b58f0d9d427112d704a
         x-checker-data:
           type: git
           tag-pattern: ^v((?:\d+.)*\d+)$
