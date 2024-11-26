@@ -12,17 +12,14 @@ env:
 
 jobs:
   flatpak-external-data-checker:
-    name: 'Check update (${{ matrix.branch || github.ref_name }})'
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        branch: ['master']
-            
+    name: 'Check update'
+    runs-on: ubuntu-22.04
+
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          ref: ${{ matrix.branch }}
+          ref: master
 
       - uses: docker://ghcr.io/flathub/flatpak-external-data-checker:latest
         with:
@@ -34,7 +31,7 @@ jobs:
           git status -s -uno
           [ -z "$(git status -s -uno)" ] || echo "::set-output name=updated::true"
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
         if: steps.is-updated.outputs.updated
         with:
           python-version: 3.9
