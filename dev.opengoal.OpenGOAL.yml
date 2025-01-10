@@ -59,8 +59,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/open-goal/launcher.git
-        tag: v2.6.2
-        commit: c247756008d7e100930e2456acc19307f8b0e556
+        tag: v2.6.3
+        commit: 5850cf5743e274c70b1d9f3b7c01125159e1c4af
         x-checker-data:
           type: git
           tag-pattern: ^v((?:\d+.)*\d+)$
