@@ -42,8 +42,11 @@
     </p>
   </description>
   <releases>
-    <release version="2.6.3" date="2025-01-09">
+    <release version="2.6.4" date="2025-03-22">
       <description></description>
+    </release>
+    <release version="2.6.3" date="2025-01-09">
+      <description/>
     </release>
     <release version="2.6.2" date="2025-01-06">
       <description/>
