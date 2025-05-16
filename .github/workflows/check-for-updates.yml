@@ -2,7 +2,7 @@ name: Check for updates
 
 on:
   schedule:
-   - cron: "00 08 * * SUN"
+    - cron: "00 08 * * SUN"
   workflow_dispatch:
 
 env:
@@ -12,21 +12,28 @@ env:
 
 jobs:
   flatpak-external-data-checker:
-    name: 'Check update'
+    name: "Check update"
     runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
           ref: master
+
+      - name: Checkout shared-modules
+        uses: actions/checkout@v4
+        with:
+          repository: flathub/shared-modules
+          path: shared-modules
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: docker://ghcr.io/flathub/flatpak-external-data-checker:latest
         with:
           args: --edit-only ${{ env.FLATPAK_ID }}.yml
 
       - name: Check updated
-        id: is-updated 
+        id: is-updated
         run: |
           git status -s -uno
           [ -z "$(git status -s -uno)" ] || echo "::set-output name=updated::true"
@@ -54,7 +61,7 @@ jobs:
           flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o cargo-sources.json launcher/src-tauri/Cargo.lock
           flatpak-node-generator yarn launcher/yarn.lock
           rm -rf launcher
-          
+
       - name: Reset
         run: |
           git checkout -- ${FLATPAK_ID}.yml *.xml
