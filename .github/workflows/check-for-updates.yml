@@ -2,7 +2,7 @@ name: Check for updates
 
 on:
   schedule:
-   - cron: "00 08 * * SUN"
+    - cron: "00 08 * * SUN"
   workflow_dispatch:
 
 env:
@@ -12,8 +12,8 @@ env:
 
 jobs:
   flatpak-external-data-checker:
-    name: 'Check update'
-    runs-on: ubuntu-22.04
+    name: "Check update"
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
           args: --edit-only ${{ env.FLATPAK_ID }}.yml
 
       - name: Check updated
-        id: is-updated 
+        id: is-updated
         run: |
           git status -s -uno
           [ -z "$(git status -s -uno)" ] || echo "::set-output name=updated::true"
@@ -45,6 +45,11 @@ jobs:
           python3 -m pip install -r flatpak-builder-tools/requirements.txt
           cd flatpak-builder-tools/node && pipx install .
 
+      - name: Add pipx-installed binaries to PATH
+        if: steps.is-updated.outputs.updated
+        run: |
+          echo "/root/.local/bin" >> $GITHUB_PATH
+
       - name: Generate sources
         if: steps.is-updated.outputs.updated
         run: |
@@ -54,7 +59,7 @@ jobs:
           flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o cargo-sources.json launcher/src-tauri/Cargo.lock
           flatpak-node-generator yarn launcher/yarn.lock
           rm -rf launcher
-          
+
       - name: Reset
         run: |
           git checkout -- ${FLATPAK_ID}.yml *.xml

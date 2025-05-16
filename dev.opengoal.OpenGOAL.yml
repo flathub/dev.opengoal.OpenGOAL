@@ -1,7 +1,7 @@
 id: dev.opengoal.OpenGOAL
 
 runtime: org.gnome.Platform
-runtime-version: '46'
+runtime-version: "48"
 sdk: org.gnome.Sdk
 
 command: open-goal-launcher
@@ -23,8 +23,8 @@ modules:
   - name: webkit2gtk-4.0
     sources:
       - type: archive
-        url: https://webkitgtk.org/releases/webkitgtk-2.46.5.tar.xz
-        sha256: bad4020bb0cfb3e740df3082c2d9cbf67cf4095596588a56aecdde6702137805
+        url: https://webkitgtk.org/releases/webkitgtk-2.48.2.tar.xz
+        sha256: ec58f6dfc25d3b360388e192f865068d69aab09b4d7df021f90e314d2fa54f37
         x-checker-data:
           type: html
           url: https://webkitgtk.org/releases/
@@ -54,17 +54,18 @@ modules:
             url: https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz
             sha256: 43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400
         cleanup:
-          - '*'
+          - "*"
   - name: open-goal-launcher
     sources:
       - type: git
         url: https://github.com/open-goal/launcher.git
-        tag: v2.6.3
-        commit: 5850cf5743e274c70b1d9f3b7c01125159e1c4af
+        tag: v2.7.5
+        commit: 5c155bc04515edf8391b55cc5b1a8b2f31959a2d
         x-checker-data:
           type: git
           tag-pattern: ^v((?:\d+.)*\d+)$
-      # Generated with flatpak-node-generator yarn yarn.lock
+      # Manually download source with flatpak-builder --force-clean --download-only build-dir dev.opengoal.OpenGOAL.yml
+      # Generated with flatpak-node-generator yarn -r yarn.lock
       - generated-sources.json
       # Generated with flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o cargo-sources.json src-tauri/Cargo.lock
       - cargo-sources.json
