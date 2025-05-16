@@ -2,7 +2,7 @@ name: Check for updates
 
 on:
   schedule:
-   - cron: "00 08 * * SUN"
+    - cron: "00 08 * * SUN"
   workflow_dispatch:
 
 env:
@@ -12,13 +12,12 @@ env:
 
 jobs:
   flatpak-external-data-checker:
-    name: 'Check update'
+    name: "Check update"
     runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
           ref: master
 
       - uses: docker://ghcr.io/flathub/flatpak-external-data-checker:latest
@@ -26,7 +25,7 @@ jobs:
           args: --edit-only ${{ env.FLATPAK_ID }}.yml
 
       - name: Check updated
-        id: is-updated 
+        id: is-updated
         run: |
           git status -s -uno
           [ -z "$(git status -s -uno)" ] || echo "::set-output name=updated::true"
@@ -48,13 +47,12 @@ jobs:
       - name: Generate sources
         if: steps.is-updated.outputs.updated
         run: |
-          git submodule update --init
           ver=$(grep release dev.opengoal.OpenGOAL.appdata.xml | grep -m1 -oP '(?<=version=.)[^"]+')
           git clone --recursive -b "v${ver}" --depth=1 https://github.com/open-goal/launcher.git
           flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o cargo-sources.json launcher/src-tauri/Cargo.lock
           flatpak-node-generator yarn launcher/yarn.lock
           rm -rf launcher
-          
+
       - name: Reset
         run: |
           git checkout -- ${FLATPAK_ID}.yml *.xml
