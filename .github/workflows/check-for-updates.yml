@@ -20,14 +20,6 @@ jobs:
         with:
           ref: master
 
-      - name: Checkout shared-modules
-        uses: actions/checkout@v4
-        with:
-          repository: flathub/shared-modules
-          path: shared-modules
-          fetch-depth: 1
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - uses: docker://ghcr.io/flathub/flatpak-external-data-checker:latest
         with:
           args: --edit-only ${{ env.FLATPAK_ID }}.yml
@@ -55,7 +47,6 @@ jobs:
       - name: Generate sources
         if: steps.is-updated.outputs.updated
         run: |
-          git submodule update --init
           ver=$(grep release dev.opengoal.OpenGOAL.appdata.xml | grep -m1 -oP '(?<=version=.)[^"]+')
           git clone --recursive -b "v${ver}" --depth=1 https://github.com/open-goal/launcher.git
           flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o cargo-sources.json launcher/src-tauri/Cargo.lock
