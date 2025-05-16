@@ -1,10 +1,10 @@
 id: dev.opengoal.OpenGOAL
 
 runtime: org.gnome.Platform
-runtime-version: '46'
+runtime-version: '47'
 sdk: org.gnome.Sdk
 
-command: open-goal-launcher
+command: OpenGOAL-Launcher
 
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node20
@@ -18,49 +18,12 @@ finish-args:
   - --share=ipc
 
 modules:
-  - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
-
-  - name: webkit2gtk-4.0
-    sources:
-      - type: archive
-        url: https://webkitgtk.org/releases/webkitgtk-2.46.5.tar.xz
-        sha256: bad4020bb0cfb3e740df3082c2d9cbf67cf4095596588a56aecdde6702137805
-        x-checker-data:
-          type: html
-          url: https://webkitgtk.org/releases/
-          version-pattern: LATEST-STABLE-(\d[\.\d]+\d)
-          url-template: https://webkitgtk.org/releases/webkitgtk-$version.tar.xz
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DPORT=GTK
-      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-      - -DENABLE_DOCUMENTATION=OFF
-      - -DENABLE_MINIBROWSER=OFF
-      - -DENABLE_WEBDRIVER=OFF
-      - -DENABLE_GAMEPAD=OFF
-      - -DUSE_LIBBACKTRACE=OFF
-      - -DUSE_GTK4=OFF
-      - -DUSE_SOUP2=ON
-      - -DENABLE_BUBBLEWRAP_SANDBOX=OFF
-    modules:
-      - shared-modules/libsoup/libsoup-2.4.json
-
-      - name: unifdef
-        no-autogen: true
-        make-install-args:
-          - prefix=${FLATPAK_DEST}
-        sources:
-          - type: archive
-            url: https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz
-            sha256: 43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400
-        cleanup:
-          - '*'
   - name: open-goal-launcher
     sources:
       - type: git
         url: https://github.com/open-goal/launcher.git
-        tag: v2.6.3
-        commit: 5850cf5743e274c70b1d9f3b7c01125159e1c4af
+        tag: v2.7.5
+        commit: 5c155bc04515edf8391b55cc5b1a8b2f31959a2d
         x-checker-data:
           type: git
           tag-pattern: ^v((?:\d+.)*\d+)$
@@ -82,14 +45,10 @@ modules:
       - yarn --offline
       - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
       - npm run tauri build -- -b deb
+      - desktop-file-edit --set-icon=dev.opengoal.OpenGOAL resources/dev.opengoal.OpenGOAL.desktop
       - install -Dm755 -t /app/bin/ src-tauri/target/release/bundle/deb/*/data/usr/bin/*
       - install -Dm644 -t /app/share/metainfo/ dev.opengoal.OpenGOAL.appdata.xml
-      - desktop-file-edit --set-icon="dev.opengoal.OpenGOAL" src-tauri/target/release/bundle/deb/*/data/usr/share/applications/open-goal-launcher.desktop
-      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/32x32/apps/open-goal-launcher.png
-        /app/share/icons/hicolor/32x32/apps/dev.opengoal.OpenGOAL.png
-      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/128x128/apps/open-goal-launcher.png
-        /app/share/icons/hicolor/128x128/apps/dev.opengoal.OpenGOAL.png
-      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/icons/hicolor/256x256@2/apps/open-goal-launcher.png
-        /app/share/icons/hicolor/256x256/apps/dev.opengoal.OpenGOAL.png
-      - install -Dm644 src-tauri/target/release/bundle/deb/*/data/usr/share/applications/open-goal-launcher.desktop
-        /app/share/applications/dev.opengoal.OpenGOAL.desktop
+      - install -Dm644 resources/icons/32.png /app/share/icons/hicolor/32x32/apps/dev.opengoal.OpenGOAL.png
+      - install -Dm644 resources/icons/128.png /app/share/icons/hicolor/128x128/apps/dev.opengoal.OpenGOAL.png
+      - install -Dm644 resources/icons/256.png /app/share/icons/hicolor/256x256/apps/dev.opengoal.OpenGOAL.png
+      - install -Dm644 resources/dev.opengoal.OpenGOAL.desktop /app/share/applications/dev.opengoal.OpenGOAL.desktop
