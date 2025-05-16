@@ -10,9 +10,8 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.node20
   - org.freedesktop.Sdk.Extension.rust-stable
 
-require-version: "1.16.0"
-
 finish-args:
+  - --require-version=1.16.0
   - --socket=x11
   - --device=dri
   - --device=input
