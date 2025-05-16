@@ -19,6 +19,7 @@ finish-args:
 
 modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
+  - shared-modules/flite/flite.json
 
   - name: webkit2gtk-4.0
     sources:
@@ -42,6 +43,7 @@ modules:
       - -DUSE_GTK4=OFF
       - -DUSE_SOUP2=ON
       - -DENABLE_BUBBLEWRAP_SANDBOX=OFF
+      - -DENABLE_SPEECH_SYNTHESIS=ON
     modules:
       - shared-modules/libsoup/libsoup-2.4.json
 
