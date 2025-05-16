@@ -10,7 +10,7 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.node20
   - org.freedesktop.Sdk.Extension.rust-stable
 
-require-version: "1.15.6"
+require-version: "1.16.0"
 
 finish-args:
   - --socket=x11
