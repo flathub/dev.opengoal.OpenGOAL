@@ -11,10 +11,8 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
 
 finish-args:
-  - --require-version=1.16.0
   - --socket=x11
-  - --device=dri
-  - --device=input
+  - --device=all
   - --socket=pulseaudio
   - --share=network
   - --share=ipc
