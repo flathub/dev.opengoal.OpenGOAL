@@ -22,8 +22,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/open-goal/launcher.git
-        tag: v2.8.6
-        commit: 5633e21371e8c4d2f5c5c472f1927f13b593ff90
+        tag: v2.8.7
+        commit: ca8285589ef5cd8a57cc68451481c200307595bd
         x-checker-data:
           type: git
           tag-pattern: ^v((?:\d+.)*\d+)$
